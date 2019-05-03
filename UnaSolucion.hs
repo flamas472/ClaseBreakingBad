@@ -52,3 +52,11 @@ aplicarHasta transformacion criterio valor
 --1a
 estaDrogado :: Personaje -> Bool
 estaDrogado personaje = nivelIntoxicacion personaje > aguante personaje
+
+--1b
+cuantoAguanteAumentaria :: Meta -> Personaje -> Float
+cuantoAguanteAumentaria meta personaje
+ | estaDrogado personaje = pureza meta
+ | otherwise = aporteDeIntoxicacion meta
+aporteDeIntoxicacion :: Meta -> Float
+aporteDeIntoxicacion meta = peso meta * pureza meta
