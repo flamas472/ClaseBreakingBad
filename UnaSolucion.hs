@@ -49,3 +49,6 @@ aplicarHasta transformacion criterio valor
  | criterio valor = valor
  | otherwise = aplicarHasta transformacion criterio (transformacion valor)
 
+--1a
+estaDrogado :: Personaje -> Bool
+estaDrogado personaje = nivelIntoxicacion personaje > aguante personaje
