@@ -54,9 +54,18 @@ estaDrogado :: Personaje -> Bool
 estaDrogado personaje = nivelIntoxicacion personaje > aguante personaje
 
 --1b
-cuantoAguanteAumentaria :: Meta -> Personaje -> Float
-cuantoAguanteAumentaria meta personaje
+aporteDeAguante :: Meta -> Personaje -> Float
+aporteDeAguante meta personaje
  | estaDrogado personaje = pureza meta
  | otherwise = aporteDeIntoxicacion meta
 aporteDeIntoxicacion :: Meta -> Float
 aporteDeIntoxicacion meta = peso meta * pureza meta
+
+--2a
+consumirMeta :: Meta -> Personaje -> Personaje
+consumirMeta meta personaje = (aumentarIntoxicacion meta) . (aumentarAguante meta) $ personaje
+
+aumentarIntoxicacion :: Meta -> Personaje -> Personaje
+aumentarIntoxicacion meta personaje = conNivelIntoxicacion (nivelIntoxicacion personaje + aporteDeIntoxicacion meta) personaje
+aumentarAguante :: Meta -> Personaje -> Personaje
+aumentarAguante meta personaje = conAguante (aguante personaje + aporteDeAguante meta personaje) personaje
