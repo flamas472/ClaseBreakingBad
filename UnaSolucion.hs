@@ -26,7 +26,7 @@ walter = UnPersonaje {
 jesse = UnPersonaje {
  nombre = "Jesse Pinkman",
  nivelIntoxicacion = 10,
-  aguante = 500,
+ aguante = 500,
  dosisDeMeta = [UnaMeta 10 0.8, UnaMeta 25 0.98],
  dinero = 1500
 }
@@ -69,3 +69,22 @@ aumentarIntoxicacion :: Meta -> Personaje -> Personaje
 aumentarIntoxicacion meta personaje = conNivelIntoxicacion (nivelIntoxicacion personaje + aporteDeIntoxicacion meta) personaje
 aumentarAguante :: Meta -> Personaje -> Personaje
 aumentarAguante meta personaje = conAguante (aguante personaje + aporteDeAguante meta personaje) personaje
+
+--2b
+mandarARehabilitacion :: Personaje -> Personaje
+mandarARehabilitacion personaje = (aplicarHasta diaRehab ((<3) . nivelIntoxicacion)) . incautarMeta $ personaje
+
+--aplicarNVeces
+--aplicarNVeces n funcion valor = foldr1 (.) (replicate n funcion) $ valor
+diaRehab :: Personaje -> Personaje
+diaRehab = (disminuirIntoxicacion 1) . (disminuirAguante 25)
+incautarMeta :: Personaje -> Personaje
+incautarMeta personaje = conDosisDeMeta [] personaje
+disminuirIntoxicacion :: Float -> Personaje -> Personaje
+disminuirIntoxicacion cantidad personaje = conNivelIntoxicacion (nuevaintoxicacion) personaje
+ where nuevaintoxicacion = max 0 (nivelIntoxicacionActual - cantidad)
+       nivelIntoxicacionActual = nivelIntoxicacion personaje
+disminuirAguante :: Float -> Personaje -> Personaje
+disminuirAguante porcentaje personaje = conAguante (nuevoAguante) personaje
+ where nuevoAguante = aguanteActual - porcentaje * (aguanteActual)
+       aguanteActual = aguante personaje
