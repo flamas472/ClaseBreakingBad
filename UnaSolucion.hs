@@ -88,3 +88,14 @@ disminuirAguante :: Float -> Personaje -> Personaje
 disminuirAguante porcentaje personaje = conAguante (nuevoAguante) personaje
  where nuevoAguante = aguanteActual - porcentaje * (aguanteActual)
        aguanteActual = aguante personaje
+
+--2c
+falopearseAFull :: Personaje -> Personaje
+falopearseAFull personaje = aplicarHasta consumirDosisPropia ((==[]) . dosisDeMeta) personaje
+
+consumirDosisPropia :: Personaje -> Personaje
+consumirDosisPropia personaje
+ |dosisDeMeta personaje == [] = personaje
+ |otherwise = (consumirMeta dosis) . (conDosisDeMeta nuevaDosisDeMeta) $ personaje
+ where dosis = head . dosisDeMeta $ personaje
+       nuevaDosisDeMeta = tail . dosisDeMeta $ personaje
