@@ -74,8 +74,6 @@ aumentarAguante meta personaje = conAguante (aguante personaje + aporteDeAguante
 mandarARehabilitacion :: Personaje -> Personaje
 mandarARehabilitacion personaje = (aplicarHasta diaRehab ((<3) . nivelIntoxicacion)) . incautarMeta $ personaje
 
---aplicarNVeces
---aplicarNVeces n funcion valor = foldr1 (.) (replicate n funcion) $ valor
 diaRehab :: Personaje -> Personaje
 diaRehab = (disminuirIntoxicacion 1) . (disminuirAguante 25)
 incautarMeta :: Personaje -> Personaje
@@ -99,3 +97,6 @@ consumirDosisPropia personaje
  |otherwise = (consumirMeta dosis) . (conDosisDeMeta nuevaDosisDeMeta) $ personaje
  where dosis = head . dosisDeMeta $ personaje
        nuevaDosisDeMeta = tail . dosisDeMeta $ personaje
+
+--2d
+quePasariaConJesse = mandarARehabilitacion . falopearseAFull $ jesse
