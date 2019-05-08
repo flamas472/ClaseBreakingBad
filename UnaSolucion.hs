@@ -100,3 +100,22 @@ consumirDosisPropia personaje
 
 --2d
 quePasariaConJesse = mandarARehabilitacion . falopearseAFull $ jesse
+
+--3
+esAltoNarco :: Personaje -> Bool
+esAltoNarco personaje = totalMetaDeLaBuena personaje > 5000 && dineroTotal personaje > 1000000
+
+valorDeMeta :: Meta -> Dinero
+valorDeMeta meta = pureza meta ^ 2 * peso meta * 10
+dineroEnMeta :: Personaje -> Dinero
+dineroEnMeta = sum . (map valorDeMeta) . dosisDeMeta
+dineroTotal :: Personaje -> Dinero
+dineroTotal personaje = dineroEnMeta personaje + dinero personaje
+esDeLaBuena :: Meta -> Bool
+esDeLaBuena = (>0.95) . pureza
+
+sumarPesoSi :: (Meta -> Bool) -> [Meta] -> Float
+sumarPesoSi condicion = sum . (map peso) . (filter condicion)
+
+totalMetaDeLaBuena :: Personaje -> Float
+totalMetaDeLaBuena = (sumarPesoSi esDeLaBuena) . dosisDeMeta
